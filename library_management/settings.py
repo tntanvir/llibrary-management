@@ -22,6 +22,8 @@ ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = ['llibrary-management.onrender.com']
 CSRF_TRUSTED_ORIGINS = ['https://llibrary-management.onrender.com','https://*.127.0.0.1']
 
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
