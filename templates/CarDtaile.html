@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %} Details {% endblock %}
+{% block body %}
+
+<div class="flex gap-2 justify-between p-5" style="height: 100vh;">
+    <div class="row row-cols-6">
+        <img src="{{data.image.url}}" style="
+        width: 40rem; border-radius: 2rem;
+    ">
+    </div>
+    <div class="flex flex-col gap-2 " style="width: 40rem;">
+        <h1 class="text-5xl">{{data.name}}</h1>
+        <p class="text-2xl">Price: $ {{data.price}}</p>
+        <p class="text-2xl">Quantity: {{data.quantity}}</p>
+        <p class="text-2xl">Brand: {{data.catagory}}</p>
+        <p>{{data.discription}}</p>
+        <span class="text-white bg-green-500 p-2 " style="width: fit-content;">Author: {{data.author}}</span>
+        <div>
+            {% if b %}
+            <h1>alreday buy</h1>
+            {% else %}
+            <form action="{% url 'borrow' data.id %}" method="post">
+                {% csrf_token %}
+                <button class="text-white bg-blue-500 p-2  rounded-md" type="submit">Borrow Now</button>
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+{% if b %}
+
+<h1 class="text-center p-2">Comment Now</h1>
+<div class="px-8 flex flex-col  py-1 gap-2">
+    <div class="">
+
+        {% for cmt in allcomments %}
+        <div class="px-2 py-6 bg-blue-100 rounded-md ">
+
+            <p class="fs-3">{{cmt.name}}</p>
+            <p>{{cmt.comment}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    <form method="post" class="p-8">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                Name
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name" name="name" type="text" placeholder="Category Name"
+                value="{{ form.name.value|default_if_none:'' }}">
+            {% if form.name.errors %}
+            <p class="text-red-500 text-xs italic">{{ form.name.errors }}</p>
+            {% endif %}
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="comment">
+                comment
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="comment" name="comment" type="text" placeholder="Category comment"
+                value="{{ form.comment.value|default_if_none:'' }}">
+            {% if form.comment.errors %}
+            <p class="text-red-500 text-xs italic">{{ form.comment.errors }}</p>
+            {% endif %}
+        </div>
+        <div class="flex items-center justify-between">
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Create
+            </button>
+        </div>
+    </form>
+</div>
+{% endif %}
+
+
+{% endblock %}

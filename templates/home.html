@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+
+<div class="p-2" style="min-height: 100vh;">
+    <h5 class="text-center">All Categories</h5>
+    <div class=" p-2 flex justify-center gap-3 ">
+        {% for cat in category %}
+
+
+
+        <a href="{% url 'category_wise_post' cat.slug %}" class="bg-blue-500 p-2 rounded-md text-white">{{cat.name}}</a>
+
+
+        {% endfor %}
+    </div>
+    <h1 class="text-center">All Product</h1>
+    <div class="flex flex-wrap gap-2 ">
+        {% for i in data%}
+        <div class="border shadow-md flex flex-col gap-4 rounded-t-lg overflow-hidden "
+            style="width: 18rem; height: fit-content; ">
+            <img class="card-img-top" src="{{i.image.url}}" alt="Card image cap">
+            <div class="flex flex-col justify-center item-center">
+
+                <div class="p-2  w-full flex flex-col gap-2">
+                    <h5 class="card-title">Name: {{i.name}}</h5>
+                    <h5 class="card-title">Price: ${{i.price}}</h5>
+                    <h5 class="card-title">catagory: {{i.catagory}}</h5>
+                    <a href="{% url 'bookdetails' i.id  %}"
+                        class="bg-blue-500 p-2 rounded-md text-white text-center">Dtaile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block title %}Report{% endblock %}
+
+{% block body %}
+<div class="max-w-6xl mx-auto py-10">
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th
+                        class="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 border-b border-gray-300">
+                        Time</th>
+                    <th
+                        class="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 border-b border-gray-300">
+                        Name</th>
+                    <th
+                        class="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 border-b border-gray-300">
+                        Amount</th>
+                    <th
+                        class="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 border-b border-gray-300">
+                        Balance After Transaction</th>
+                    <th
+                        class="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 border-b border-gray-300">
+                        Transaction Type</th>
+                    <th
+                        class="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 border-b border-gray-300">
+                        Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in transactions %}
+
+                <tr class="bg-gray-50">
+                    <td class="py-2 px-4 border-b border-gray-300">{{i.timestamp}}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">{{i.account.user.first_name}}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">{{i.amount}}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">{{i.balance_after_transaction}}</td>
+                    {% if i.transaction_type == 1 %}
+                    <td class="py-2 px-4 border-b border-gray-300">Deposit</td>
+                    {% elif i.transaction_type == 2 %}
+                    <td class="py-2 px-4 border-b border-gray-300">Borrow</td>
+                    {% else %}
+                    <td class="py-2 px-4 border-b border-gray-300">Return</td>
+
+                    {% endif %}
+
+                    {% if i.transaction_type == 2 %}
+                    <td class="py-2 px-4 border-b border-gray-300">
+
+
+                        <a href="{% url 'return' i.id %}"
+                            class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700" type="submit">Return</a>
+
+
+                    </td>
+                    {% else %}
+                    <td class="py-2 px-4 border-b border-gray-300">
+                        <span class="text-white py-1 px-2 rounded hover:bg-blue-700"></span>
+                    </td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
